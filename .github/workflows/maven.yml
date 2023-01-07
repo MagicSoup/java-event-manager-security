@@ -10,9 +10,9 @@ name: Java CI with Maven + Sonar Cloud
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "release*", "feature*", "issue*" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "release*" ]
 
 jobs:
   build:
