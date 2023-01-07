@@ -21,6 +21,7 @@
         <surefire.version>3.0.0-M7</surefire.version>
         <code.coverage.exclusions>
             **/com/event/manager/security/domain/exception/**/*,
+            **/com/event/manager/security/domain/api/**/*,
             **/com/event/manager/security/EventManagerSecurityApplication.java
         </code.coverage.exclusions>
         <jacoco.report.xml.path>target/site/jacoco/jacoco.xml</jacoco.report.xml.path>
