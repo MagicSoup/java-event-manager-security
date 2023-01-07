@@ -1,7 +1,7 @@
 package com.event.manager.security.controller;
 
+import com.event.manager.security.domain.api.RoleDTO;
 import com.event.manager.security.domain.exception.RoleNotFoundException;
-import com.event.manager.security.domain.model.Role;
 import com.event.manager.security.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -34,7 +33,7 @@ public class RoleController {
      * @throws RoleNotFoundException if the specified role doesn't exist
      */
     @GetMapping("/{role}")
-    public Role get(@PathVariable(value = "role") String role) throws RoleNotFoundException {
+    public RoleDTO get(@PathVariable(value = "role") String role) throws RoleNotFoundException {
         return this.roleService.get(role);
     }
 
@@ -44,7 +43,7 @@ public class RoleController {
      * @return all the roles
      */
     @GetMapping
-    public Set<Role> getAll() {
+    public Set<RoleDTO> getAll() {
         return this.roleService.getAll();
     }
 }

@@ -1,7 +1,9 @@
 package com.event.manager.security.controller;
 
+import com.event.manager.security.domain.api.RoleDTO;
 import com.event.manager.security.domain.exception.RoleNotFoundException;
 import com.event.manager.security.domain.model.Role;
+import com.event.manager.security.mapper.RoleMapper;
 import com.event.manager.security.service.RoleService;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,8 +33,6 @@ class RoleControllerTest {
 
     private final static String API_BASE_URI = "/api/v1/role";
 
-    private final static String EXPECTED_NOT_FOUND_MESSAGE = "The asked role %s has been not found";
-
     @Autowired
     private MockMvc mockMvc;
 
@@ -42,12 +42,15 @@ class RoleControllerTest {
     @MockBean
     private RoleService roleService;
 
+    @Autowired
+    private RoleMapper roleMapper;
+
     @Test
     void get_givenHappyPath_thenReturnRoleAndDefaultPermissions() throws Exception {
 
         // params
         String roleProvided = "SUPER_ADMIN";
-        Role roleExpected = Role.SUPER_ADMIN;
+        RoleDTO roleExpected = this.roleMapper.map(Role.SUPER_ADMIN);
 
         // mock
         when(this.roleService.get(roleProvided)).thenReturn(roleExpected);
@@ -61,7 +64,7 @@ class RoleControllerTest {
         String contentAsString = response.getContentAsString();
 
         // convert
-        Role roleResponse = this.mapper.readValue(contentAsString, Role.class);
+        RoleDTO roleResponse = this.mapper.readValue(contentAsString, RoleDTO.class);
 
         // assert
         assertThat(roleResponse).isNotNull();
@@ -102,7 +105,9 @@ class RoleControllerTest {
 
         // mock
         when(this.roleService.getAll())
-                .thenReturn(Arrays.stream(Role.values()).collect(Collectors.toSet()));
+                .thenReturn(Arrays.stream(Role.values())
+                        .map(this.roleMapper::map)
+                        .collect(Collectors.toSet()));
 
         // execute
         MockHttpServletRequestBuilder requestBuilder = get(API_BASE_URI);
@@ -113,8 +118,8 @@ class RoleControllerTest {
         String contentAsString = response.getContentAsString();
 
         // convert
-        JavaType roleSetType = this.mapper.getTypeFactory().constructCollectionType(Set.class, Role.class);
-        Set<Role> roles = this.mapper.readValue(contentAsString, roleSetType);
+        JavaType roleSetType = this.mapper.getTypeFactory().constructCollectionType(Set.class, RoleDTO.class);
+        Set<RoleDTO> roles = this.mapper.readValue(contentAsString, roleSetType);
 
         // assert
         assertThat(roles).hasSize(5);

@@ -1,7 +1,9 @@
 package com.event.manager.security.service;
 
+import com.event.manager.security.domain.api.RoleDTO;
 import com.event.manager.security.domain.exception.RoleNotFoundException;
 import com.event.manager.security.domain.model.Role;
+import com.event.manager.security.mapper.RoleMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,17 +24,19 @@ class RoleServiceTest {
 
     @BeforeEach
     public void init() {
-        this.underTest = new RoleService();
+        this.underTest = new RoleService(new RoleMapper());
     }
 
     @Test
     void getAll_givenHappyPath_thenRetrieveAllDefaultRoles() {
+
+
         // execute
-        Set<Role> roles = this.underTest.getAll();
+        Set<RoleDTO> roles = this.underTest.getAll();
 
         // assert
-        assertThat(roles)
-                .containsExactlyInAnyOrder(SUPER_ADMIN, ADMIN, ORGANIZER, GUESS, NONE);
+        assertThat(roles).map(RoleDTO::getName)
+                .containsExactlyInAnyOrder("SUPER_ADMIN", "ADMIN", "ORGANIZER", "GUESS", "NONE");
     }
 
     private static Stream<Arguments> getRolesArgumentProvider() {
@@ -50,10 +54,10 @@ class RoleServiceTest {
         // params
 
         // execute
-        Role foundRole = this.underTest.get(roleAsString);
+        RoleDTO foundRole = this.underTest.get(roleAsString);
 
         // assert
-        assertThat(foundRole).isEqualTo(expectedRole);
+        assertThat(foundRole.getName()).isEqualTo(expectedRole.name());
     }
 
     @Test
