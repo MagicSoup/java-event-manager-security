@@ -129,7 +129,7 @@
             <properties>
                 <sonar.host.url>https://sonarcloud.io</sonar.host.url>
                 <sonar.organization>magicsoup</sonar.organization>
-                <sonar.projectKey>MagicSoup_java-event-manager-security</sonar.projectKey>
+                <sonar.projectKey>EventManager_java-event-manager-security-app</sonar.projectKey>
                 <sonar.moduleKey>${project.groupId}:${project.artifactId}</sonar.moduleKey>
                 <sonar.exclusions>${code.coverage.exclusions}</sonar.exclusions>
                 <sonar.report>${jacoco.report.xml.path}</sonar.report>
