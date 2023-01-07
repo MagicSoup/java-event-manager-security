@@ -1,0 +1,59 @@
+{
+	"info": {
+		"_postman_id": "2b9c6474-3d0a-4f96-8a53-3eda8b6cab2b",
+		"name": "Event Manager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25227543"
+	},
+	"item": [
+		{
+			"name": "Security App",
+			"item": [
+				{
+					"name": "Roles",
+					"item": [
+						{
+							"name": "Get - All roles",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{EVENT-MANAGER-SECURITY-APP}}/api/v1/role",
+									"host": [
+										"{{EVENT-MANAGER-SECURITY-APP}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"role"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get - Role",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{EVENT-MANAGER-SECURITY-APP}}/api/v1/role/SUPER_ADMIN",
+									"host": [
+										"{{EVENT-MANAGER-SECURITY-APP}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"role",
+										"SUPER_ADMIN"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
