@@ -25,7 +25,7 @@ Run the PostgreSQL Docker image by providing a default user and binding the data
 image to a local directory in order to keep the data each time the image is launched.
 ```
 docker run --name postgresql \
--e POSTGRES_USER=manager \
+-e POSTGRES_USER=event-manager \
 -e POSTGRES_PASSWORD=p@ssw0rd \
 -p 5432:5432 \
 -v /data:/var/lib/postgresql/data -d postgres
@@ -55,7 +55,7 @@ docker pull dpage/pgadmin4:latest
 Run the PGAdmin Docker image by providing a default user. You need to replace the **manager@domain.local** by a real email address.
 ```
 docker run --name pgadmin -p 8081:80 \
--e 'PGADMIN_DEFAULT_EMAIL=manager@domain.local' \
+-e 'PGADMIN_DEFAULT_EMAIL=event-manager@domain.local' \
 -e 'PGADMIN_DEFAULT_PASSWORD=p@ssw0rd' \
 -d dpage/pgadmin4
 ```
@@ -71,7 +71,7 @@ docker stop pgadmin
 docker start pgadmin
 ```
 You can then access to the interface by going to the following address : http://localhost:8081/ with
-username **manager@domain.local** (replaced) and password **p@ssw0rd**
+username **event-manager@domain.local** (replaced) and password **p@ssw0rd**
 
 Once logged, you can add a new server, for the connection you will need the IpAddress of the PostgreSQL container instance.
 You can retrieve it by executing the following command :
