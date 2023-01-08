@@ -14,11 +14,14 @@
     <name>Event Manager - Security App</name>
     <description>The event manager security application</description>
     <properties>
-        <java.version>19</java.version>
-        <!-- plugins -->
+        <!-- libs version -->
+        <h2.version>2.1.214</h2.version>
+        <!-- plugins version -->
         <sonar.version>3.9.1.2184</sonar.version>
         <jacoco.version>0.8.8</jacoco.version>
         <surefire.version>3.0.0-M7</surefire.version>
+        <!-- global -->
+        <java.version>19</java.version>
         <code.coverage.exclusions>
             **/com/event/manager/security/domain/exception/**/*,
             **/com/event/manager/security/domain/api/**/*,
@@ -36,19 +39,30 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        <!--dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jooq</artifactId>
-        </dependency-->
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+
         <!-- Lombok dependencies -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+
+        <!-- Flyway dependencies -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
         </dependency>
 
         <!-- Test dependencies -->
@@ -65,6 +79,12 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

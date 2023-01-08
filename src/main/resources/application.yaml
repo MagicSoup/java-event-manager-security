@@ -1,2 +1,19 @@
 server:
   port: 9000
+spring:
+  datasource:
+    url: jdbc:postgresql://172.17.0.2:5432/event-manager?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: event-manager-security-user-rw
+    password: p@ssw0rd
+    hikari:
+      schema: security
+    driver-class-name: org.postgresql.Driver
+  jooq:
+    sql-dialect: postgres
+  flyway:
+    url: ${spring.datasource.url}
+    default-schema: ${spring.datasource.hikari.schema}
+    user: event-manager-security-user-deploy
+    password: p@ssw0rd
+    locations: classpath:db/migration, classpath:db/specific/${spring.jooq.sql-dialect}
+    table: FLYWAY_SCHEMA_HISTORY

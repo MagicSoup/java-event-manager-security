@@ -3,3 +3,6 @@ logging:
     org.springframework.web: DEBUG
     org.springframework.security: DEBUG
     org.springframework: INFO
+    org.flywaydb: DEBUG
+    root: INFO
+
