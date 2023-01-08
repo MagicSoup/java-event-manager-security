@@ -3,8 +3,6 @@ spring:
     url: jdbc:h2:mem:event_manager_security;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;DATABASE_TO_UPPER=false;
     username: sa
     password:
-    hikari:
-      schema: security
     driver-class-name: org.h2.Driver
   jooq:
     sql-dialect: h2
@@ -12,5 +10,12 @@ spring:
     url: ${spring.datasource.url}INIT=RUNSCRIPT FROM 'classpath:db/init/init.sql';
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
-    schemas: security
-    locations: classpath:db/specific/${spring.jooq.sql-dialect}
+    locations: classpath:db/specific/${spring.jooq.sql-dialect}, classpath:db/init/data
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework: INFO
+    org.flywaydb: DEBUG
+    org.h2: DEBUG
+    root: INFO

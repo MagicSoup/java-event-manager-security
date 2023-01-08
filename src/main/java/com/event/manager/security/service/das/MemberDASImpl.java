@@ -29,10 +29,10 @@ public class MemberDASImpl implements MemberDAS {
 
     @Override
     public MemberRecord getByUsername(String username) throws MemberNotFoundException {
-        MemberRecord record = this.dsl.selectFrom(MEMBER).where(MEMBER.USERNAME.eq(username)).fetchOne();
-        if (record == null) {
+        MemberRecord memberRecord = this.dsl.selectFrom(MEMBER).where(MEMBER.USERNAME.eq(username)).fetchOne();
+        if (memberRecord == null) {
             throw new MemberNotFoundException(username);
         }
-        return record;
+        return memberRecord;
     }
 }

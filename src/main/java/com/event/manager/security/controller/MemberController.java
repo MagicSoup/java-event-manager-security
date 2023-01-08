@@ -33,7 +33,7 @@ public class MemberController {
      * @throws MemberNotFoundException if the specified member username doesn't exist
      */
     @GetMapping("/{username}")
-    public MemberDTO get(@PathVariable(value = "username") String username) throws MemberNotFoundException {
+    public MemberDTO getByUsername(@PathVariable(value = "username") String username) throws MemberNotFoundException {
         return this.memberService.getByUsername(username);
     }
 }
