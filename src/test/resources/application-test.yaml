@@ -13,4 +13,4 @@ spring:
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
     schemas: security
-    locations: classpath:db/migration, classpath:db/specific/${spring.jooq.sql-dialect}
+    locations: classpath:db/specific/${spring.jooq.sql-dialect}

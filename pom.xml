@@ -15,7 +15,6 @@
     <description>The event manager security application</description>
     <properties>
         <!-- libs version -->
-        <h2.version>2.1.214</h2.version>
         <!-- plugins version -->
         <sonar.version>3.9.1.2184</sonar.version>
         <jacoco.version>0.8.8</jacoco.version>
@@ -41,15 +40,26 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- Spring boot jooq dependencies -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jooq</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-postgres-extensions</artifactId>
+            <version>${jooq.version}</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
         <!-- Lombok dependencies -->
@@ -84,7 +94,6 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>${h2.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -113,6 +122,60 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+                <version>${jooq.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-jooq-sources</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <generator>
+                                <generate>
+                                    <pojos>false</pojos>
+                                    <daos>false</daos>
+                                    <pojosEqualsAndHashCode>true</pojosEqualsAndHashCode>
+                                    <javaTimeTypes>true</javaTimeTypes>
+                                </generate>
+                                <database>
+                                    <!--name>org.jooq.meta.postgres.PostgresDatabase</name-->
+                                    <name>org.jooq.meta.extensions.ddl.DDLDatabase</name>
+                                    <inputSchema/>
+                                    <inputCatalog/>
+                                    <outputSchemaToDefault>true</outputSchemaToDefault>
+                                    <outputCatalogToDefault>true</outputCatalogToDefault>
+                                    <properties>
+                                        <property>
+                                            <key>sort</key>
+                                            <value>semantic</value>
+                                        </property>
+                                        <property>
+                                            <key>scripts</key>
+                                            <value>src/main/resources/db/migration/*</value>
+                                        </property>
+                                    </properties>
+                                </database>
+                                <target>
+                                    <clean>true</clean>
+                                    <directory>target/generated-sources/jooq</directory>
+                                    <packageName>com.event.manager.db</packageName>
+                                </target>
+                            </generator>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-meta-extensions</artifactId>
+                        <version>${jooq.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

@@ -15,5 +15,5 @@ spring:
     default-schema: ${spring.datasource.hikari.schema}
     user: event-manager-security-user-deploy
     password: p@ssw0rd
-    locations: classpath:db/migration, classpath:db/specific/${spring.jooq.sql-dialect}
+    locations: classpath:db/migration
     table: FLYWAY_SCHEMA_HISTORY
