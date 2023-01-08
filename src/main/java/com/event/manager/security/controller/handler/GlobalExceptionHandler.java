@@ -1,6 +1,6 @@
 package com.event.manager.security.controller.handler;
 
-import com.event.manager.security.domain.exception.RoleNotFoundException;
+import com.event.manager.security.domain.exception.notfound.RoleNotFoundException;
 import com.event.manager.security.domain.api.error.ApiError;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;

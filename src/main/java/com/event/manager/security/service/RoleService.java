@@ -1,7 +1,7 @@
 package com.event.manager.security.service;
 
 import com.event.manager.security.domain.api.RoleDTO;
-import com.event.manager.security.domain.exception.RoleNotFoundException;
+import com.event.manager.security.domain.exception.notfound.RoleNotFoundException;
 import com.event.manager.security.domain.model.Role;
 import com.event.manager.security.mapper.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.requireNonNull;
+
 @Service
 public class RoleService {
 
@@ -18,7 +20,7 @@ public class RoleService {
 
     @Autowired
     public RoleService(RoleMapper roleMapper) {
-        this.roleMapper = roleMapper;
+        this.roleMapper = requireNonNull(roleMapper, "The roleMapper is required");
     }
 
     public Set<RoleDTO> getAll() {

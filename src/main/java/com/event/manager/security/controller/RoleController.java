@@ -1,7 +1,7 @@
 package com.event.manager.security.controller;
 
 import com.event.manager.security.domain.api.RoleDTO;
-import com.event.manager.security.domain.exception.RoleNotFoundException;
+import com.event.manager.security.domain.exception.notfound.RoleNotFoundException;
 import com.event.manager.security.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
