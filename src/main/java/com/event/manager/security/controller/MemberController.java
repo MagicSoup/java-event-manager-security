@@ -1,6 +1,6 @@
 package com.event.manager.security.controller;
 
-import com.event.manager.security.domain.api.MemberDTO;
+import com.event.manager.security.domain.model.api.MemberDTO;
 import com.event.manager.security.domain.exception.notfound.MemberNotFoundException;
 import com.event.manager.security.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;

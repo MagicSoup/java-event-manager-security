@@ -1,10 +1,11 @@
 package com.event.manager.security.service;
 
-import com.event.manager.db.security.tables.records.MemberRecord;
-import com.event.manager.security.domain.api.MemberDTO;
 import com.event.manager.security.domain.exception.notfound.MemberNotFoundException;
+import com.event.manager.security.domain.model.Permission;
+import com.event.manager.security.domain.model.api.MemberDTO;
 import com.event.manager.security.mapper.MemberMapper;
 import com.event.manager.security.service.das.MemberDAS;
+import com.event.manager.security.service.das.mock.MemberRolePermissionMockDataProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,32 +23,42 @@ class MemberServiceTest {
     @Mock
     private MemberDAS memberDASMocked;
 
+    private MemberMapper memberMapper;
+
     private MemberService underTest;
 
     @BeforeEach
     public void init() {
-        this.underTest = new MemberService(this.memberDASMocked, new MemberMapper());
+        this.memberMapper = new MemberMapper();
+        this.underTest = new MemberService(this.memberDASMocked, this.memberMapper);
     }
 
     @Test
     void getByUsername_givenHappyUsername_ThenReturnMemberDTO() throws MemberNotFoundException {
         // params
-        Integer idExpected = 1;
-        String usernamedExpected = "usernamedExpected";
-        String passwordExpected = "passwordExpected";
-        String emailExpected = "emailExpected";
-        MemberRecord memberRecord = new MemberRecord(idExpected, usernamedExpected, passwordExpected, emailExpected, LocalDateTime.now());
+        String usernamedExpected = "PeterPan";
+        String passwordExpected = "PASSWORD";
+        String emailExpected = "PeterPan@EVENT-MANAGER.COM";
+        LocalDateTime createdOnExpected = LocalDateTime.now();
+        String applicationExpected = "EVENT_MANAGER_BOARDING_GAME";
+        String roleExpected = "GUESS";
+        String permissionExpected = "VIEW";
 
         // mock
-        when(this.memberDASMocked.getByUsername(usernamedExpected)).thenReturn(memberRecord);
+        MemberRolePermissionMockDataProvider provider = new MemberRolePermissionMockDataProvider(usernamedExpected, passwordExpected, emailExpected, createdOnExpected,
+                applicationExpected, roleExpected, permissionExpected);
+        when(memberDASMocked.getByUsername(usernamedExpected)).thenReturn(this.memberMapper.map(provider.mockResultForMemberRolePermission()));
 
         // execute
         MemberDTO memberDTO = this.underTest.getByUsername(usernamedExpected);
 
         // assert
         assertThat(memberDTO).isNotNull();
-        assertThat(memberDTO.getUserName()).isEqualTo(usernamedExpected);
+        assertThat(memberDTO.getUsername()).isEqualTo(usernamedExpected);
         assertThat(memberDTO.getEmail()).isEqualTo(emailExpected);
+        assertThat(memberDTO.getPermissions()).isNotEmpty();
+        String permissionKey = String.format("%s_%S", applicationExpected, roleExpected);
+        assertThat(memberDTO.getPermissions().get(permissionKey)).containsExactly(Permission.VIEW);
 
         // verify
         verify(this.memberDASMocked).getByUsername(usernamedExpected);

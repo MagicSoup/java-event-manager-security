@@ -143,7 +143,6 @@
                                     <javaTimeTypes>true</javaTimeTypes>
                                 </generate>
                                 <database>
-                                    <!--name>org.jooq.meta.postgres.PostgresDatabase</name-->
                                     <name>org.jooq.meta.extensions.ddl.DDLDatabase</name>
                                     <inputSchema/>
                                     <inputCatalog/>

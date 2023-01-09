@@ -1,6 +1,6 @@
 package com.event.manager.security.controller.handler;
 
-import com.event.manager.security.domain.api.error.ApiError;
+import com.event.manager.security.domain.model.api.error.ApiError;
 import com.event.manager.security.domain.exception.notfound.MemberNotFoundException;
 import com.event.manager.security.domain.exception.notfound.RoleNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;

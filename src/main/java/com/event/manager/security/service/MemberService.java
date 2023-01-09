@@ -1,8 +1,8 @@
 package com.event.manager.security.service;
 
-import com.event.manager.db.security.tables.records.MemberRecord;
-import com.event.manager.security.domain.api.MemberDTO;
 import com.event.manager.security.domain.exception.notfound.MemberNotFoundException;
+import com.event.manager.security.domain.model.api.MemberDTO;
+import com.event.manager.security.domain.model.entity.MemberEntity;
 import com.event.manager.security.mapper.MemberMapper;
 import com.event.manager.security.service.das.MemberDAS;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class MemberService {
     }
 
     public MemberDTO getByUsername(String username) throws MemberNotFoundException {
-        MemberRecord memberRecord = this.memberDAS.getByUsername(username);
+        MemberEntity memberRecord = this.memberDAS.getByUsername(username);
         return this.memberMapper.map(memberRecord);
     }
 }

@@ -1,6 +1,6 @@
 package com.event.manager.security.mapper;
 
-import com.event.manager.security.domain.api.RoleDTO;
+import com.event.manager.security.domain.model.api.RoleDTO;
 import com.event.manager.security.domain.model.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
