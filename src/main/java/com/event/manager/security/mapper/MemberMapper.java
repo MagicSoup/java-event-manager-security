@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class MemberMapper {
     public MemberDTO map(MemberRecord memberRecord) {
-        return new MemberDTO(memberRecord.getId(), memberRecord.getUsername(), memberRecord.getEmail());
+        return new MemberDTO(memberRecord.getUsername(), memberRecord.getEmail());
     }
 }

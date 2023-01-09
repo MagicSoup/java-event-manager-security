@@ -33,7 +33,6 @@ class MemberMapperTest {
 
         // assert
         assertThat(memberDTO).isNotNull();
-        assertThat(memberDTO.getId()).isEqualTo(idExpected);
         assertThat(memberDTO.getUserName()).isEqualTo(usernamedExpected);
         assertThat(memberDTO.getEmail()).isEqualTo(emailExpected);
 

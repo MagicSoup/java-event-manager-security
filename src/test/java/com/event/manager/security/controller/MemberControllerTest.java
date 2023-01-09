@@ -41,12 +41,11 @@ class MemberControllerTest {
     void get_givenHappyPath_thenReturnMember() throws Exception {
 
         // params
-        Integer idExpected = 1;
         String usernamedExpected = "usernamedExpected";
         String emailExpected = "emailExpected";
 
         // mock
-        when(this.memberService.getByUsername(usernamedExpected)).thenReturn(new MemberDTO(idExpected, usernamedExpected, emailExpected));
+        when(this.memberService.getByUsername(usernamedExpected)).thenReturn(new MemberDTO(usernamedExpected, emailExpected));
 
         // execute
         MockHttpServletRequestBuilder requestBuilder = get(API_BASE_URI + "/" + usernamedExpected);
@@ -61,7 +60,6 @@ class MemberControllerTest {
 
         // assert
         assertThat(memberResponse).isNotNull();
-        assertThat(memberResponse.getId()).isEqualTo(idExpected);
         assertThat(memberResponse.getUserName()).isEqualTo(usernamedExpected);
         assertThat(memberResponse.getEmail()).isEqualTo(emailExpected);
 
