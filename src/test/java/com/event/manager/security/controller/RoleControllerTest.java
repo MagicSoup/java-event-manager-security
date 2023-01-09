@@ -69,7 +69,6 @@ class RoleControllerTest {
         RoleDTO roleResponse = this.mapper.readValue(contentAsString, RoleDTO.class);
 
         // assert
-        assertThat(roleResponse).isNotNull();
         assertThat(roleResponse).isEqualTo(roleExpected);
 
         // verify
