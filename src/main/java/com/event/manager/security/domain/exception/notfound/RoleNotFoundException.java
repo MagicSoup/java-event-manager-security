@@ -1,4 +1,6 @@
-package com.event.manager.security.domain.exception;
+package com.event.manager.security.domain.exception.notfound;
+
+import com.event.manager.security.domain.exception.SecurityException;
 
 import static java.lang.String.format;
 
