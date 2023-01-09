@@ -1,4 +1,4 @@
-package com.event.manager.security.domain.api.error;
+package com.event.manager.security.domain.model.api.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

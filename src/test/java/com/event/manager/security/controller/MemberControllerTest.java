@@ -1,6 +1,6 @@
 package com.event.manager.security.controller;
 
-import com.event.manager.security.domain.api.MemberDTO;
+import com.event.manager.security.domain.model.api.MemberDTO;
 import com.event.manager.security.domain.exception.notfound.MemberNotFoundException;
 import com.event.manager.security.service.MemberService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -60,7 +60,7 @@ class MemberControllerTest {
 
         // assert
         assertThat(memberResponse).isNotNull();
-        assertThat(memberResponse.getUserName()).isEqualTo(usernamedExpected);
+        assertThat(memberResponse.getUsername()).isEqualTo(usernamedExpected);
         assertThat(memberResponse.getEmail()).isEqualTo(emailExpected);
 
         // verify

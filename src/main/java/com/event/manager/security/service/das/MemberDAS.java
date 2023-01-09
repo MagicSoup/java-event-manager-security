@@ -1,7 +1,7 @@
 package com.event.manager.security.service.das;
 
-import com.event.manager.db.security.tables.records.MemberRecord;
 import com.event.manager.security.domain.exception.notfound.MemberNotFoundException;
+import com.event.manager.security.domain.model.entity.MemberEntity;
 
 /**
  * The interface Author das.
@@ -14,5 +14,5 @@ public interface MemberDAS {
      * @param username the member username
      * @return the member
      */
-    MemberRecord getByUsername(String username) throws MemberNotFoundException;
+    MemberEntity getByUsername(String username) throws MemberNotFoundException;
 }
