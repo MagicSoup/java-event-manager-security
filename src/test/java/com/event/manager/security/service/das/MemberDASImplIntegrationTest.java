@@ -1,14 +1,15 @@
 package com.event.manager.security.service.das;
 
+import com.event.manager.security.config.DefaultSpringBootTest;
 import com.event.manager.security.domain.exception.notfound.MemberNotFoundException;
 import com.event.manager.security.domain.model.entity.MemberEntity;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.stream.Stream;
 
@@ -17,8 +18,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.of;
 
-@ActiveProfiles("test")
-@SpringBootTest
+@Tags({@Tag("integration")})
+@DefaultSpringBootTest
 class MemberDASImplIntegrationTest {
 
     @Autowired

@@ -16,17 +16,15 @@
     <properties>
         <!-- libs version -->
         <!-- plugins version -->
-        <sonar.version>3.9.1.2184</sonar.version>
-        <jacoco.version>0.8.8</jacoco.version>
-        <surefire.version>3.0.0-M7</surefire.version>
+        <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
+        <surefire-maven-plugin.version>3.0.0-M7</surefire-maven-plugin.version>
         <!-- global -->
         <java.version>19</java.version>
-        <code.coverage.exclusions>
-            **/com/event/manager/security/domain/exception/**/*,
-            **/com/event/manager/security/domain/**/*,
-            **/com/event/manager/security/EventManagerSecurityApplication.java
-        </code.coverage.exclusions>
-        <jacoco.report.xml.path>target/site/jacoco/jacoco.xml</jacoco.report.xml.path>
+        <!-- global test config -->
+        <skipTests>false</skipTests>
+        <skipUTs>${skipTests}</skipUTs>
+        <skipITs>true</skipITs>
     </properties>
     <dependencies>
         <!-- Spring boot dependencies -->
@@ -102,19 +100,19 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${surefire-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>${jacoco.version}</version>
+                    <version>${jacoco-maven-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.sonarsource.scanner.maven</groupId>
                     <artifactId>sonar-maven-plugin</artifactId>
-                    <version>${sonar.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${surefire.version}</version>
+                    <version>${sonar-maven-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -176,32 +174,90 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>${skipUTs}</skipTests>
+                    <!-- All tests except ones below-->
+                    <excludedGroups>integration, system</excludedGroups>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <skipITs>${skipITs}</skipITs>
+                    <groups>integration</groups>
+                    <excludedGroups>system</excludedGroups>
+                    <includes>
+                        <include>**/*IntegrationTest.java</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
     <profiles>
         <profile>
+            <id>integration-test</id>
+            <properties>
+                <skipITs>false</skipITs>
+            </properties>
+        </profile>
+        <profile>
             <id>coverage</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <properties>
+                <!-- for multi-module projects, override those properties replacing ${project.basedir} by ${maven.multiModuleProjectDirectory} -->
+                <jacoco.binary.file>${project.basedir}/target/jacoco.exec</jacoco.binary.file>
+                <jacoco.xml.file>${project.basedir}/target/jacoco.xml</jacoco.xml.file>
+                <jacoco-class-folders>${project.basedir}/target/jacoco-class-folders</jacoco-class-folders>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
+                        <configuration>
+                            <dataFile>${jacoco.binary.file}</dataFile>
+                            <includes>
+                                <include>com/event/manager/**</include>
+                            </includes>
+                            <excludes>
+                                <exclude>**/generated/**</exclude>
+                            </excludes>
+                        </configuration>
                         <executions>
                             <execution>
                                 <goals>
                                     <goal>prepare-agent</goal>
                                 </goals>
+                                <configuration>
+                                    <destFile>${jacoco.binary.file}</destFile>
+                                    <append>true</append>
+                                </configuration>
                             </execution>
                             <execution>
-                                <id>report</id>
-                                <phase>test</phase>
+                                <id>jacoco-integration-initialize</id>
+                                <phase>pre-integration-test</phase>
                                 <goals>
-                                    <goal>report</goal>
+                                    <goal>prepare-agent-integration</goal>
                                 </goals>
+                                <configuration>
+                                    <destFile>${jacoco.binary.file}</destFile>
+                                    <append>true</append>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
@@ -211,12 +267,17 @@
         <profile>
             <id>sonar</id>
             <properties>
+                <sonar.coverage.jacoco.xmlReportPaths>${jacoco.xml.file}</sonar.coverage.jacoco.xmlReportPaths>
+                <code.coverage.exclusions>
+                    **/com/event/manager/security/domain/exception/**/*,
+                    **/com/event/manager/security/domain/**/*,
+                    **/com/event/manager/security/EventManagerSecurityApplication.java
+                </code.coverage.exclusions>
                 <sonar.host.url>https://sonarcloud.io</sonar.host.url>
                 <sonar.organization>magicsoup</sonar.organization>
                 <sonar.projectKey>EventManager_java-event-manager-security-app</sonar.projectKey>
                 <sonar.moduleKey>${project.groupId}:${project.artifactId}</sonar.moduleKey>
                 <sonar.exclusions>${code.coverage.exclusions}</sonar.exclusions>
-                <sonar.report>${jacoco.report.xml.path}</sonar.report>
             </properties>
             <activation>
                 <activeByDefault>false</activeByDefault>
