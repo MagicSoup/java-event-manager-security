@@ -1,19 +1,17 @@
 package com.event.manager.security.controller;
 
-import com.event.manager.security.domain.model.api.RoleDTO;
+import com.event.manager.security.annotations.ControllerSetupSpringBootTest;
 import com.event.manager.security.domain.exception.notfound.RoleNotFoundException;
 import com.event.manager.security.domain.model.Role;
+import com.event.manager.security.domain.model.api.RoleDTO;
 import com.event.manager.security.mapper.RoleMapper;
 import com.event.manager.security.service.RoleService;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -28,9 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ActiveProfiles({"test"})
-@SpringBootTest
-@AutoConfigureMockMvc
+@ControllerSetupSpringBootTest
 class RoleControllerTest {
 
     private final static String API_BASE_URI = "/api/v1/role";
