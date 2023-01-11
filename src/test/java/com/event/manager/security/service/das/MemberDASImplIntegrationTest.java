@@ -1,6 +1,6 @@
 package com.event.manager.security.service.das;
 
-import com.event.manager.security.config.DefaultSpringBootTest;
+import com.event.manager.security.annotations.DefaultSpringBootTest;
 import com.event.manager.security.domain.exception.notfound.MemberNotFoundException;
 import com.event.manager.security.domain.model.entity.MemberEntity;
 import org.junit.jupiter.api.Tag;

@@ -1,6 +1,6 @@
 package com.event.manager.security;
 
-import com.event.manager.security.config.DefaultSpringBootTest;
+import com.event.manager.security.annotations.DefaultSpringBootTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 
